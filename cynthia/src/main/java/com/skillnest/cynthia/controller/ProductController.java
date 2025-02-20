@@ -1,5 +1,6 @@
 package com.skillnest.cynthia.controller;
 
+import com.skillnest.cynthia.dto.ProductDTO;
 import com.skillnest.cynthia.model.Product;
 import com.skillnest.cynthia.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,8 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createNewProduct(@RequestBody Product product) {
-        Product newProduct = productService.saveProduct(product);
+    public ResponseEntity<ProductDTO> createNewProduct(@RequestBody Product product) {
+        ProductDTO newProduct = productService.saveProduct(product);
         return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
     }
 

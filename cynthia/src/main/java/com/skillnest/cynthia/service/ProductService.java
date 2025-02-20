@@ -1,5 +1,7 @@
 package com.skillnest.cynthia.service;
 
+import com.skillnest.cynthia.dto.ProductDTO;
+import com.skillnest.cynthia.mapper.ProductMapper;
 import com.skillnest.cynthia.model.Product;
 import com.skillnest.cynthia.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,13 +16,15 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
 
     public List<Product> getProducts() {
         return productRepository.findAll();
     }
 
-    public Product saveProduct(Product product) {
-        return productRepository.save(product);
+    public ProductDTO saveProduct(Product product) {
+        productRepository.save(product);
+        return productMapper.toDTO(product);
     }
 
     public Product getProduct(Long id) {

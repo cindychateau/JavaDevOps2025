@@ -1,5 +1,7 @@
 package com.skillnest.cynthia.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +31,26 @@ public class Product {
     @Column(updatable=false)
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date createdAt;
+    
+    @JsonManagedReference
+    @OneToOne(mappedBy="product",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+    private ProductDetail detail;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private Category category;
+
+    /*
+    @JsonIgnore //Para ignorarlo por completo
+    @ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(
+        name="orders_has_products",
+        joinColumns = @JoinColumn(name="product_id"),
+        inverseJoinColumns = @JoinColumn(name="order_id")
+   )
+    private List<Order> orders;
+     */
 
     @PrePersist //Antes de generar el registro ejecuta
     protected void generateDate() {
